@@ -9,13 +9,13 @@ module.exports = {
   config: {
     name: "khushi",
     aliases: ["dewani", "khush"],
-    version: "19.0.0",
+    version: "20.0.0",
     author: "TAHA KHAN",
     countDown: 2,
     role: 0,
     description: {
-      en: "Dewani — Short Flirty AI + Fast Video/Audio Downloader (Auto Reply)",
-      ur: "Dewani — Short Flirty AI + Fast Video/Audio Downloader (Auto Reply)"
+      en: "Dewani — Replies to ANY quote/reply on Bot's messages",
+      ur: "Dewani — Bot k kisi bhi message par reply karne par auto-respond"
     },
     category: "ai",
     guide: {
@@ -34,7 +34,7 @@ module.exports = {
   OWNER_TAG: "»»𝐎𝐖𝐍𝐄𝐑««★™  »»𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍««",
   TRIGGER_WORDS: ["khushi", "dewani", "khush"],
 
-  // Save message to onReply state
+  // Save message to GoatBot onReply state
   saveOnReply(info, senderID) {
     if (info && info.messageID && global.GoatBot?.onReply) {
       global.GoatBot.onReply.set(info.messageID, {
@@ -255,23 +255,29 @@ Dewani:`;
   },
 
   async onChat({ api, event }) {
-    const body = (event.body || "").toLowerCase().trim();
+    const body = (event.body || "").trim();
     if (!body) return;
 
-    const triggered = this.TRIGGER_WORDS.some(word => body.includes(word.toLowerCase()));
-    if (!triggered) return;
+    const botID = api.getCurrentUserID();
+    
+    // Check if user quoted/replied to ANY message sent by this bot
+    const isReplyToBot = event.type === "message_reply" && String(event.messageReply?.senderID) === String(botID);
+    
+    // Check if message contains trigger words
+    const containsTrigger = this.TRIGGER_WORDS.some(word => body.toLowerCase().includes(word.toLowerCase()));
 
-    const prefix = global.GoatBot?.config?.prefix || ".";
-    if (body.startsWith(prefix)) return;
+    // Agar bot k kisi bhi message par reply aya ho YA trigger word ho
+    if (isReplyToBot || containsTrigger) {
+      const prefix = global.GoatBot?.config?.prefix || ".";
+      if (body.startsWith(prefix)) return;
 
-    return this.processMessage(api, event, event.body);
+      return this.processMessage(api, event, body);
+    }
   },
 
-  // Jab koi bhi message par reply karega to ye trigger hoga
   async onReply({ api, event }) {
     const text = (event.body || "").trim();
     if (!text) return;
     return this.processMessage(api, event, text);
   }
 };
-          
