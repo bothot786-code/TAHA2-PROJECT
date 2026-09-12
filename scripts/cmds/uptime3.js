@@ -6,7 +6,7 @@ module.exports = {
     name: "uptime3",
     aliases: ["up3"],
     version: "1.2",
-    author: "Siam Ahmed Saan",
+    author: "TAHA KHAN",
     countDown: 5,
     role: 0,
     shortDescription: "system uptime",
@@ -35,7 +35,7 @@ module.exports = {
       await delay(400);
       try {
         await api.editMessage(
-          "SAAN BOT System ✅\n" + loadStages[i],
+          "TAHA BOT System ✅\n" + loadStages[i],
           msgID
         );
       } catch (e) {
@@ -66,7 +66,7 @@ module.exports = {
 
       return `
 ╔═════════════════════╗
-║   ⚡ SAAN BOT SYSTEM ⚡
+║   ⚡ TAHA BOT SYSTEM ⚡
 ╠═════════════════════╣
 ║ ⏳ Uptime   : ${d}d ${h}h ${m}m ${s}s
 ║ 📅 Date     : ${date}
@@ -81,7 +81,7 @@ module.exports = {
 ║
 ║ ⚙️ PID      : ${process.pid}
 ║ 🛠 Node.js  : ${process.version}
-║ 🧘‍♂️ Owner   : Siam Ahmed Saan
+║ 🧘‍♂️ Owner   : TAHA KHAN 
 ╠═════════════════════╣
 ║        ✅ SYSTEM RUNNING
 ╚═════════════════════╝
