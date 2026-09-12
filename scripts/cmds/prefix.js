@@ -87,7 +87,7 @@ module.exports = {
         hour: "2-digit",
         minute: "2-digit",
         second: "2-digit",
-        timeZone: "Asia/Dhaka"
+        timeZone: "Asia/Karachi"
       });
  
       return message.reply({
@@ -96,10 +96,10 @@ module.exports = {
 👨‍💻 𝐘𝐨𝐮𝐫 𝐠𝐫𝐨𝐮𝐩 𝐩𝐫𝐞𝐟𝐢𝐱: ${threadPrefix}
  
 ╭‣ 𝐀𝐝𝐦𝐢𝐧 👑
-╰‣  Siam Ahmed Saan
+╰‣  TAHA KHAN
  
 ╭‣ 𝐅𝐚𝐜𝐞𝐛𝐨𝐨𝐤 ⓕ
-╰‣ m.facebook.com/siam.ahmed.491801`,
+╰‣ m.facebook.com/100075933317520`,
         attachment: await global.utils.getStreamFromURL(videoUrl)
       });
     }
