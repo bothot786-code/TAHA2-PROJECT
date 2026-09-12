@@ -112,7 +112,7 @@ module.exports = {
         msg += `╰‣ Total Commands: ${totalCommands}\n`;
         msg += `╭‣ Page ${page}/${totalPages}\n`;
         msg += `╰‣ Prefix: ${prefix}\n`;
-        msg += `╭‣ Admin: 𝗦𝗶𝗮𝗺 𝗔𝗵𝗺𝗲𝗱 𝗦𝗮𝗮𝗻\n`;
+        msg += `╭‣ Admin: 𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍\n`;
         msg += `╰‣ Type ${prefix}help <command> for details`;
 
         return message.reply({
