@@ -6,7 +6,7 @@ module.exports = {
   config: {
     name: "welcome",
     version: "2.0",
-    author: "Siam Ahmed Saan",
+    author: "Taha khan",
     category: "events"
   },
 
@@ -44,7 +44,7 @@ module.exports = {
     }
 
     const timeStr = new Date().toLocaleString("en-BD", {
-      timeZone: "Asia/Dhaka",
+      timeZone: "Asia/Karachi",
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
