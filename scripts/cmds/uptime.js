@@ -8,7 +8,7 @@ module.exports = {
     name: "up",
     aliases: ["uptime"],
     version: "0.0.7",
-    author: "Siam Ahmed Saan",
+    author: "TAHA KHAN",
     countDown: 3,
     role: 0,
     shortDescription: "bot stats image",
@@ -106,7 +106,7 @@ module.exports = {
       );
 
       const bodyText = `
-✿•≫────•『SAAN BOT』•────≪•✿
+✿•≫────•『TAHA BOT』•────≪•✿
 ⏳ Uptime: ${uptimeStr}
 📶 Ping: ${ping} ms
 🖥 CPU Load: ${cpuUsage}
