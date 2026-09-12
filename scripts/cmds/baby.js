@@ -51,7 +51,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     try {
         if (!args[0]) {
-            const ran = ["Bolo baby ❤️", "Baby help likho", "Kuch bolo na", "Suno to sahi?"];
+            const ran = ["", "", "", ""];
             return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
         }
         if (args[0] === 'remove') {
@@ -77,7 +77,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
                 }));
                 teachers.sort((a, b) => b.value - a.value);
                 const output = teachers.map((t, i) => `${i + 1}/ ${t.name}: ${t.value}`).join('\n');
-                return api.sendMessage(`Kul Seekh (Total Teach) = ${data.length}\n👑 | Baby ke Ustaadon ki Fehrist\n${output}`, event.threadID, event.messageID);
+                return api.sendMessage(`= \n${output}`, event.threadID, event.messageID);
             } else {
                 const d = (await axios.get(`${link}?list=all`)).data;
                 return api.sendMessage(`❇️ | Kul Seekh = ${d.length || "api band hai"}\n♻️ | Kul Jawab = ${d.responseLength || "api band hai"}`, event.threadID, event.messageID);
