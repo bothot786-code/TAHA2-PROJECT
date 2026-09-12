@@ -36,10 +36,10 @@ module.exports.config = {
     author: "dipto cdi | Siam Ahmed Saan",
     countDown: 0,
     role: 0,
-    description: "better than all sim simi api by dipto",
+    description: "Dipto ki taraf se tamam simsimi api se behtar bot",
     category: "chat",
     guide: {
-        en: "{pn} [anyMessage] OR\nteach [YourMessage] - [Reply1], [Reply2], [Reply3]... OR\nteach [react] [YourMessage] - [react1], [react2], [react3]... OR\nremove [YourMessage] OR\nrm [YourMessage] - [indexNumber] OR\nmsg [YourMessage] OR\nlist OR \nall OR\nedit [YourMessage] - [NewMessage]"
+        en: "{pn} [koiBhiMessage] YA\nteach [AapkaMessage] - [Jawab1], [Jawab2], [Jawab3]... YA\nteach [react] [AapkaMessage] - [react1], [react2], [react3]... YA\nremove [AapkaMessage] YA\nrm [AapkaMessage] - [indexNumber] YA\nmsg [AapkaMessage] YA\nlist YA \nall YA\nedit [AapkaMessage] - [NayaMessage]"
     }
 };
 
@@ -51,7 +51,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     try {
         if (!args[0]) {
-            const ran = ["Bolo baby ❤️", "Type baby help", "Kichu bolooo", "Sunno ki?"];
+            const ran = ["Bolo baby ❤️", "Baby help likho", "Kuch bolo na", "Suno to sahi?"];
             return api.sendMessage(ran[Math.floor(Math.random() * ran.length)], event.threadID, event.messageID);
         }
         if (args[0] === 'remove') {
@@ -72,15 +72,15 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
                 const teachers = await Promise.all(limited.map(async (item) => {
                     const number = Object.keys(item)[0];
                     const value = item[number];
-                    const name = await usersData.getName(number).catch(() => number) || "Not found";
+                    const name = await usersData.getName(number).catch(() => number) || "Nahi mila";
                     return { name, value };
                 }));
                 teachers.sort((a, b) => b.value - a.value);
                 const output = teachers.map((t, i) => `${i + 1}/ ${t.name}: ${t.value}`).join('\n');
-                return api.sendMessage(`Total Teach = ${data.length}\n👑 | List of Teachers of baby\n${output}`, event.threadID, event.messageID);
+                return api.sendMessage(`Kul Seekh (Total Teach) = ${data.length}\n👑 | Baby ke Ustaadon ki Fehrist\n${output}`, event.threadID, event.messageID);
             } else {
                 const d = (await axios.get(`${link}?list=all`)).data;
-                return api.sendMessage(`❇️ | Total Teach = ${d.length || "api off"}\n♻️ | Total Response = ${d.responseLength || "api off"}`, event.threadID, event.messageID);
+                return api.sendMessage(`❇️ | Kul Seekh = ${d.length || "api band hai"}\n♻️ | Kul Jawab = ${d.responseLength || "api band hai"}`, event.threadID, event.messageID);
             }
         }
         if (args[0] === 'msg') {
@@ -90,34 +90,34 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
         }
         if (args[0] === 'edit') {
             const parts = xalman.split(/\s*-\s*/);
-            if (parts.length < 2) return api.sendMessage('❌ | Invalid format! Use edit [YourMessage] - [NewReply]', event.threadID, event.messageID);
+            if (parts.length < 2) return api.sendMessage('❌ | Ghalat tareeqa! Istemaal karein: edit [AapkaMessage] - [NayaReply]', event.threadID, event.messageID);
             const dA = (await axios.get(`${link}?edit=${encodeURIComponent(args[1])}&replace=${encodeURIComponent(parts[1])}&senderID=${uid}`)).data.message;
-            return api.sendMessage(`changed ${dA}`, event.threadID, event.messageID);
+            return api.sendMessage(`Tabdeel ho gaya: ${dA}`, event.threadID, event.messageID);
         }
         if (args[0] === 'teach' && args[1] === 'react') {
             const parts = xalman.replace("teach react ", "").split(/\s*-\s*/);
-            if (parts.length < 2) return api.sendMessage('❌ | Invalid format! Use: teach react message - ❤️, 😀', event.threadID, event.messageID);
+            if (parts.length < 2) return api.sendMessage('❌ | Ghalat tareeqa! Istemaal karein: teach react message - ❤️, 😀', event.threadID, event.messageID);
             const msg = parts[0].trim();
             const reacts = parts[1].trim();
             const res = await axios.get(`${link}?teach=${encodeURIComponent(msg)}&react=${encodeURIComponent(reacts)}`);
-            return api.sendMessage(`✅ Reacts added: ${res.data.message}`, event.threadID, event.messageID);
+            return api.sendMessage(`✅ Reacts shamil kar diye gaye: ${res.data.message}`, event.threadID, event.messageID);
         }
         if (args[0] === 'teach' && args[1] === 'amar') {
             const parts = xalman.split(/\s*-\s*/);
-            if (parts.length < 2) return api.sendMessage('❌ | Invalid format! Use: teach amar message - reply', event.threadID, event.messageID);
+            if (parts.length < 2) return api.sendMessage('❌ | Ghalat tareeqa! Istemaal karein: teach amar message - reply', event.threadID, event.messageID);
             const msg = parts[0].replace("teach amar ", "").trim();
             const reply = parts[1].trim();
             const res = await axios.get(`${link}?teach=${encodeURIComponent(msg)}&senderID=${uid}&reply=${encodeURIComponent(reply)}&key=intro`);
-            return api.sendMessage(`✅ Intro reply added: ${res.data.message}`, event.threadID, event.messageID);
+            return api.sendMessage(`✅ Taarufi jawab shamil ho gaya: ${res.data.message}`, event.threadID, event.messageID);
         }
         if (args[0] === 'teach' && args[1] !== 'amar' && args[1] !== 'react') {
             const parts = xalman.split(/\s*-\s*/);
-            if (parts.length < 2) return api.sendMessage('❌ | Invalid format! Use: teach message - reply1, reply2', event.threadID, event.messageID);
+            if (parts.length < 2) return api.sendMessage('❌ | Ghalat tareeqa! Istemaal karein: teach message - reply1, reply2', event.threadID, event.messageID);
             const msg = parts[0].replace("teach ", "").trim();
             const replies = parts[1].trim();
             const res = await axios.get(`${link}?teach=${encodeURIComponent(msg)}&reply=${encodeURIComponent(replies)}&senderID=${uid}&threadID=${event.threadID}`);
-            const teacherName = (await usersData.get(res.data.teacher)).name || "Unknown";
-            const outputMessage = utils.monospace(`✅ Replies added: ${res.data.message}\n👤 Teacher: ${teacherName}\n📚 Total Teachs: ${res.data.teachs}`);
+            const teacherName = (await usersData.get(res.data.teacher)).name || "Anjaan";
+            const outputMessage = utils.monospace(`✅ Jawab shamil ho gaya: ${res.data.message}\n👤 Ustaad: ${teacherName}\n📚 Kul Teachs: ${res.data.teachs}`);
             return api.sendMessage(outputMessage, event.threadID, event.messageID);
         }
 
@@ -129,7 +129,7 @@ module.exports.onStart = async ({ api, event, args, usersData }) => {
 
     } catch (e) {
         console.log(e);
-        api.sendMessage("Check console for error", event.threadID, event.messageID);
+        api.sendMessage("Console check karein error ke liye", event.threadID, event.messageID);
     }
 };
 
@@ -150,16 +150,31 @@ module.exports.onReply = async ({ api, event, Reply }) => {
 module.exports.onChat = async ({ api, event, usersData }) => {
     try {
         const body = event.body ? event.body.toLowerCase() : "";
-        if (body.startsWith("baby") || body.startsWith("বট") || body.startsWith("baby") || body.startsWith("hinata") || body.startsWith("mahiru") || body.startsWith("bby") || body.startsWith("bot") || body.startsWith("jan") || body.startsWith("babu") || body.startsWith("alya")) {
+        if (body.startsWith("baby") || body.startsWith("bot") || body.startsWith("hinata") || body.startsWith("mahiru") || body.startsWith("bby") || body.startsWith("jan") || body.startsWith("babu") || body.startsWith("alya")) {
             const arr = body.replace(/^\S+\s*/, "");
             const uid = event.senderID;
             const senderName = (await usersData.getName(uid)) || "User";
             const baseReplies = [
-                "𝗢𝗶𝗶-মামা ডাকিস না প্লিজ 32 তারিখ আমার বিয়ে-🫣💃🏻", "কতদিন হয়ে গেলো🥺বিছানায় মুতি না মিস ইউ নেংটা কাল-🥺🥀", "🍺_𝗘𝗶𝗶 নেও জুস খাও বেবি বলতে বলতে হাঁপাই গেছো না-🤗", "শুনবো না😼তুমি আমাকে প্রেম করাই দাও নি🥺পচা তুমি🥺",
-                "চৌধুরী সাহেব আমি গরিব হতে পারি-😾🤭-কিন্তু বড়লোক না-🥹😐", "তোকে ছাড়া বড় মন খারাপ লাগে 💔", "একটু হাসি না তোর হাসি দেখলে ভালো লাগে 💕", "তোরে খুব মিস করছি জানিস? 🥺",
-                "তোর জন্য রোজ দোয়া করি ❤️", "তোকে পেয়ে আমি সত্যি ভাগ্যবান 😇", "তোর মুখে একটা মিষ্টি হাসি সবসময় থাকুক ✨", "তোকে খুব ভালোবাসি রে পাগল 💝",
-                "তুই আমার জীবনের সবচেয়ে সুন্দর মানুষ 🌸", "তোর মতো বন্ধু পেয়ে আমি ধন্য 🙏", "তোর কথা ভাবলে মনটা শান্তি পায় 🕊️", "তুই আমার সেরা ক্রাশ 💘",
-                "তোর জন্য আমি সবসময় আছি 🤗", "তুই আমার প্রাণের স্পন্দন 💓", "তোর স্মৃতি আমার চোখে ভাসে 🌙", "তোকে আল্লাহ আমার জন্য রেখেছে বলে বিশ্বাস হয় 🤲"
+                "𝗢𝗶𝗶-Mama mat bula please, 32 tareekh ko meri shadi hai! 🫣💃🏻", 
+                "Kitne din ho gaye bistar pe nahi moota, miss karta hu bachpan ke din 🥺🥀", 
+                "🍺_Yeh lo juice piyo, baby bol bol ke thak gaye ho na? 🤗", 
+                "Nahi sunungi 😼 tumne mujhe kisi se set nahi karwaya 🥺 gande ho tum 🥺",
+                "Chaudhry saab main ghareeb ho sakta hu 😾🤭 lekin ameer nahi 🥹😐", 
+                "Tumhare bina bohot udaas lagta hai 💔", 
+                "Thoda muskurao na, tumhari muskaan bohot achhi lagti hai 💕", 
+                "Tumhein bohot miss kar raha hu pata hai? 🥺",
+                "Tumhare liye roz dua karta hu ❤️", 
+                "Tumhein pa kar main bohot khush-naseeb hu 😇", 
+                "Tumhare chehre par hamesha meethi muskaan rahe ✨", 
+                "Tumse bohot pyar karta hu pagal 💝",
+                "Tum meri zindagi ke sabse khoobsurat insan ho 🌸", 
+                "Tum jaisa dost pa kar main dhanya ho gaya 🙏", 
+                "Tumhare baare mein soch kar dil ko sukoon milta hai 🕊️", 
+                "Tum meri sabse best crush ho 💘",
+                "Tumhare liye main hamesha hazir hu 🤗", 
+                "Tum meri dhadkan ho 💓", 
+                "Tumhari yaadein meri aankhon mein rehti hain 🌙", 
+                "Yaqeen hota hai ke Allah ne tumhein mere liye hi banaya hai 🤲"
             ];
 
             if (!arr) {
