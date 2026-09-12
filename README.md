@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ff00ff,50:00ffff,100:ff0080&height=200&section=header&text=SAAN%20BOT%20V3&fontSize=70&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=⚡Facebook%20Messenger%20Bot%20⚡&descSize=20&descAlignY=60&descColor=FFD700" width="100%"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:ff00ff,50:00ffff,100:ff0080&height=200&section=header&text=TAHA%20BOT%20V3&fontSize=70&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=⚡Facebook%20Messenger%20Bot%20⚡&descSize=20&descAlignY=60&descColor=FFD700" width="100%"/>
 </div>
 
 <br/>
@@ -208,8 +208,8 @@ npm start
 
 Role Name Contribution
 🏆 Original Creator NTKhang03 Goat-Bot-V2 Base
-👑 Modifier SAAN Core Modifications & Enhancements
-🛠️ Maintainer SIAM AHMED SAAN Active Development & Support
+👑 Modifier taha  Core Modifications & Enhancements
+🛠️ Maintainer TAHA KHAN Active Development & Support
 
 </div>
 
@@ -234,12 +234,12 @@ If you find this project helpful, please consider:
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
-║                    SAAN BOT V3                            ║
+║                    TAHA BOT V3                            ║
 ║                 MIT License (No Derivatives)                ║
 ║                                                             ║
 ║  Copyright (c) 2022 NTKhang03                              ║
 ║  Modified by SAAN                                      ║
-║  Maintained by SIAM AHMED SAAN                            ║
+║  Maintained by TAHA KHAN                               ║
 ║                                                             ║
 ║  ✔ You may use and share this software freely              ║
 ║  ✘ You may NOT modify or create derivative works           ║
