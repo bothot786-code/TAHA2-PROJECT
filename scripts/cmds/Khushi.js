@@ -9,13 +9,13 @@ module.exports = {
   config: {
     name: "khushi",
     aliases: ["dewani", "khush"],
-    version: "20.0.0",
+    version: "22.0.0",
     author: "TAHA KHAN",
     countDown: 2,
     role: 0,
     description: {
-      en: "Dewani — Replies to ANY quote/reply on Bot's messages",
-      ur: "Dewani — Bot k kisi bhi message par reply karne par auto-respond"
+      en: "Dewani — Auto replies to users when replying to bot messages (No Self Loop)",
+      ur: "Dewani — Bot k message par sirf doosro k reply par answer kare gi"
     },
     category: "ai",
     guide: {
@@ -34,15 +34,20 @@ module.exports = {
   OWNER_TAG: "»»𝐎𝐖𝐍𝐄𝐑««★™  »»𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍««",
   TRIGGER_WORDS: ["khushi", "dewani", "khush"],
 
-  // Save message to GoatBot onReply state
-  saveOnReply(info, senderID) {
-    if (info && info.messageID && global.GoatBot?.onReply) {
-      global.GoatBot.onReply.set(info.messageID, {
-        commandName: this.config.name,
-        author: senderID,
-        messageID: info.messageID
-      });
-    }
+  // Safe message sender function
+  sendMsg(api, content, threadID, messageID, senderID) {
+    return new Promise((resolve) => {
+      api.sendMessage(content, threadID, (err, info) => {
+        if (!err && info && global.GoatBot?.onReply) {
+          global.GoatBot.onReply.set(info.messageID, {
+            commandName: this.config.name,
+            author: senderID,
+            messageID: info.messageID
+          });
+        }
+        resolve(info);
+      }, messageID);
+    });
   },
 
   fileSizeGuard(maxBytes) {
@@ -100,7 +105,7 @@ module.exports = {
       const info = this.isYouTubeUrl(query) ? { url: query, title: "Requested Media" } : await this.getYTInfo(query);
       if (!info || !info.url) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("Maafi jaanu, ye audio nahi mili 🥺💔", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+        return this.sendMsg(api, "Maafi jaanu, ye audio nahi mili 🥺💔", threadID, messageID, senderID);
       }
 
       const { data } = await axios.post(this.AUDIO_API, { url: info.url }, { timeout: 30000 });
@@ -108,7 +113,7 @@ module.exports = {
 
       if (!downloadUrl) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("Maafi jaanu, iska download link nahi mil raha 🥺", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+        return this.sendMsg(api, "Maafi jaanu, iska download link nahi mil raha 🥺", threadID, messageID, senderID);
       }
 
       filePath = path.join(cacheDir, `khushi_${senderID}_${Date.now()}.mp3`);
@@ -121,18 +126,17 @@ module.exports = {
       );
 
       api.setMessageReaction("✅", messageID, () => {}, true);
-      return api.sendMessage({
+      await this.sendMsg(api, {
         body: `${this.OWNER_TAG}\n\n𝒀𝑬 𝑳𝑶 𝑩𝑨𝑩𝒀 𝑨𝑷𝑲𝑰👉 MP3 file tayar hai! 💖\n🎵 Title: ${info.title}`,
         attachment: fs.createReadStream(filePath)
-      }, threadID, async (err, info) => {
-        this.saveOnReply(info, senderID);
-        await this.removeFile(filePath);
-      }, messageID);
+      }, threadID, messageID, senderID);
+
+      await this.removeFile(filePath);
 
     } catch (err) {
       api.setMessageReaction("❌", messageID, () => {}, true);
       await this.removeFile(filePath);
-      return api.sendMessage("Jaanu server busy hai, thodi der baad try karna 🥺", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+      return this.sendMsg(api, "Jaanu server busy hai, thodi der baad try karna 🥺", threadID, messageID, senderID);
     }
   },
 
@@ -149,7 +153,7 @@ module.exports = {
       const info = this.isYouTubeUrl(query) ? { url: query, title: "Requested Media" } : await this.getYTInfo(query);
       if (!info || !info.url) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("Maafi jaanu, ye video nahi mili 🥺💔", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+        return this.sendMsg(api, "Maafi jaanu, ye video nahi mili 🥺💔", threadID, messageID, senderID);
       }
 
       const { data } = await axios.post(this.VIDEO_API, { url: info.url }, { timeout: 30000 });
@@ -157,7 +161,7 @@ module.exports = {
 
       if (!downloadUrl) {
         api.setMessageReaction("❌", messageID, () => {}, true);
-        return api.sendMessage("Maafi jaanu, iska download link nahi mil raha 🥺", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+        return this.sendMsg(api, "Maafi jaanu, iska download link nahi mil raha 🥺", threadID, messageID, senderID);
       }
 
       filePath = path.join(cacheDir, `khushi_${senderID}_${Date.now()}.mp4`);
@@ -170,18 +174,17 @@ module.exports = {
       );
 
       api.setMessageReaction("✅", messageID, () => {}, true);
-      return api.sendMessage({
+      await this.sendMsg(api, {
         body: `${this.OWNER_TAG}\n\n𝒀𝑬 𝑳𝑶 𝑩𝑨𝑩𝒀 𝑨𝑷𝑲𝑰👉 MP4 file tayar hai! 💖\n🎬 Title: ${info.title}`,
         attachment: fs.createReadStream(filePath)
-      }, threadID, async (err, info) => {
-        this.saveOnReply(info, senderID);
-        await this.removeFile(filePath);
-      }, messageID);
+      }, threadID, messageID, senderID);
+
+      await this.removeFile(filePath);
 
     } catch (err) {
       api.setMessageReaction("❌", messageID, () => {}, true);
       await this.removeFile(filePath);
-      return api.sendMessage("Jaanu server busy hai, thodi der baad try karna 🥺", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+      return this.sendMsg(api, "Jaanu server busy hai, thodi der baad try karna 🥺", threadID, messageID, senderID);
     }
   },
 
@@ -216,19 +219,17 @@ Dewani:`;
 
       this.chatMemory[threadID].push(`Dewani: ${reply}`);
 
-      return api.sendMessage(reply, threadID, (err, info) => {
-        this.saveOnReply(info, senderID);
-      }, messageID);
+      return this.sendMsg(api, reply, threadID, messageID, senderID);
     } catch (e) {
       console.error("[khushi AI Error]", e.message);
-      return api.sendMessage("Net issue hai baby, main thak gayi hoon 🥺", threadID, (err, info) => this.saveOnReply(info, senderID), messageID);
+      return this.sendMsg(api, "Net issue hai baby, main thak gayi hoon 🥺", threadID, messageID, senderID);
     }
   },
 
   // ===== MAIN PROCESSOR =====
   async processMessage(api, event, text) {
     let cleanedMsg = text.replace(/^khushi[\s,!.?:-]*/i, "").trim();
-    if (!cleanedMsg) return api.sendMessage("Bolo na jaanu, kya chahiye? 😘", event.threadID, (err, info) => this.saveOnReply(info, event.senderID), event.messageID);
+    if (!cleanedMsg) return this.sendMsg(api, "Bolo na jaanu, kya chahiye? 😘", event.threadID, event.messageID, event.senderID);
 
     const isVideoReq = /\b(video|vdo|mp4)\b/i.test(cleanedMsg);
     const isAudioReq = /\b(song|music|audio|mp3|play|gana|gaana)\b/i.test(cleanedMsg);
@@ -237,7 +238,7 @@ Dewani:`;
       let query = cleanedMsg.replace(/\b(video|vdo|mp4|song|music|audio|mp3|play|gana|gaana|khushi|dewani|khush)\b/gi, "").trim();
       if (this.isYouTubeUrl(cleanedMsg)) query = cleanedMsg;
 
-      if (!query) return api.sendMessage("Jaanu naam to batao kya download karun? 🥺", event.threadID, (err, info) => this.saveOnReply(info, event.senderID), event.messageID);
+      if (!query) return this.sendMsg(api, "Jaanu naam to batao kya download karun? 🥺", event.threadID, event.messageID, event.senderID);
 
       if (isVideoReq) {
         return this.downloadVideo(api, event, query);
@@ -251,22 +252,28 @@ Dewani:`;
 
   // ===== GOATBOT COMMAND HANDLERS =====
   async onStart({ api, event, args }) {
+    const botID = api.getCurrentUserID();
+    if (String(event.senderID) === String(botID)) return;
     return this.processMessage(api, event, args.join(" "));
   },
 
   async onChat({ api, event }) {
-    const body = (event.body || "").trim();
-    if (!body) return;
+    if (!event.body) return;
 
     const botID = api.getCurrentUserID();
     
-    // Check if user quoted/replied to ANY message sent by this bot
-    const isReplyToBot = event.type === "message_reply" && String(event.messageReply?.senderID) === String(botID);
-    
-    // Check if message contains trigger words
+    // 🛑 BLOCK SELF-REPLY (Aapka bot ab khud ke msgs par trigger nahi hoga)
+    if (String(event.senderID) === String(botID)) return;
+
+    const body = event.body.trim();
+
+    // Check if the user is replying to ANY message sent by the bot
+    const isReplyToBot = event.type === "message_reply" && 
+      (String(event.messageReply?.senderID) === String(botID) || String(event.messageReply?.author) === String(botID));
+
+    // Check trigger words
     const containsTrigger = this.TRIGGER_WORDS.some(word => body.toLowerCase().includes(word.toLowerCase()));
 
-    // Agar bot k kisi bhi message par reply aya ho YA trigger word ho
     if (isReplyToBot || containsTrigger) {
       const prefix = global.GoatBot?.config?.prefix || ".";
       if (body.startsWith(prefix)) return;
@@ -276,8 +283,12 @@ Dewani:`;
   },
 
   async onReply({ api, event }) {
-    const text = (event.body || "").trim();
-    if (!text) return;
-    return this.processMessage(api, event, text);
+    if (!event.body) return;
+    const botID = api.getCurrentUserID();
+    
+    // 🛑 BLOCK SELF-REPLY
+    if (String(event.senderID) === String(botID)) return;
+
+    return this.processMessage(api, event, event.body.trim());
   }
 };
