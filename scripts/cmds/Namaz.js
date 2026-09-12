@@ -25,7 +25,7 @@ module.exports = {
           `📌 𝗨𝘀𝗮𝗴𝗲:\n` +
           `• ${this.config.name} [city] [country]\n\n` +
           `📍 𝗘𝘅𝗮𝗺𝗽𝗹𝗲𝘀:\n` +
-          `• .namaz Dhaka Bangladesh\n` +
+          `• .namaz Karachi Pakistan\n` +
           `• .namaz New York USA\n` +
           `• .namaz London UK\n\n` +
           `🤲 May Allah accept your prayers!`,
