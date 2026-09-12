@@ -7,7 +7,7 @@ module.exports = {
     name: "owner",
     aliases: ["info"],
     version: "1.3.0",
-    author: "Siam Ahmed Saan",
+    author: "𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍",
     role: 0,
     shortDescription: "Owner information with image",
     category: "Information",
@@ -19,17 +19,17 @@ module.exports = {
   onStart: async function ({ api, event }) {
     const ownerText = 
 `╭─ 👑 Oᴡɴᴇʀ Iɴғᴏ 👑 ─╮
-│ 👤 Nᴀᴍᴇ       : 𝗦𝗶𝗮𝗺 𝗔𝗵𝗺𝗲𝗱 𝗦𝗮𝗮𝗻 
-│ 🦋 Nɪᴄᴋ       : 𝗦𝗮𝗮𝗻 𝗘𝘅𝗵𝗮𝘂𝘀𝘁𝗲𝗱 
-│ 🎂 Aɢᴇ        : 23+
+│ 👤 Nᴀᴍᴇ       : 𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍
+│ 🦋 Nɪᴄᴋ       : 𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍
+│ 🎂 Aɢᴇ        : 19
 │ 💘 Rᴇʟᴀᴛɪᴏɴ : STFU
-│ 🎓 Pʀᴏғᴇssɪᴏɴ : 𝗦𝘁𝘂𝗱𝗲𝗻𝘁
-│ 📚 Eᴅᴜᴄᴀᴛɪᴏɴ : 𝗨𝗻𝗱𝗲𝗿𝗴𝗿𝗮𝗱𝘂𝗮𝘁𝗲 𝗥𝗲𝘀𝗲𝗮𝗿𝗰𝗵 𝗘𝗻𝘁𝗵𝘂𝘀𝗶𝗮𝘀𝘁 • 𝗡𝗼𝗿𝘁𝗵 𝗦𝗼𝘂𝘁𝗵 𝗨𝗻𝗶𝘃𝗲𝗿𝘀𝗶𝘁𝘆
-│ 🏡 Lᴏᴄᴀᴛɪᴏɴ : Gulshan rd 133, Dhaka Bangladesh 
+│ 🎓 Pʀᴏғᴇssɪᴏɴ : 𝐉𝐎𝐁
+│ 📚 Eᴅᴜᴄᴀᴛɪᴏn   : 𝐆𝐎𝐕𝐄𝐓 𝐒𝐂𝐇𝐎𝐎𝐋
+│ 🏡 Lᴏᴄᴀᴛɪᴏɴ : 𝐋𝐀𝐇𝐎𝐄𝐑 𝐏𝐀𝐊𝐈𝐒𝐀𝐍
 ├─ 🔗 Cᴏɴᴛᴀᴄᴛ ─╮
-│ 📘 Facebook  :  id=100075454605535
-│ 💬 Messenger: id=100075454605535
-│ 📞 WhatsApp  : 01898747***
+│ 📘 Facebook  :  id=100075933317520
+│ 💬 Messenger: id=100075933317520
+│ 📞 WhatsApp  : 923474771404
 ╰────────────────╯`;
 
     const cacheDir = path.join(__dirname, "cache");
