@@ -27,7 +27,7 @@ module.exports = {
     const isSelfLeave = leftParticipantFbId == event.author;
     if (!isSelfLeave) return;
 
-    const text = `👉 ${userName} গ্রুপে থাকার যোগ্যতা নেই দেখে লিভ নিয়েছে 😅`;
+    const text = `👉 ${userName} CHLA GYA BEKARI INSAN😅`;
 
 
     const gifUrl = "https://i.postimg.cc/DZLhjf5r/VID-20250826-WA0002.gif";
