@@ -80,7 +80,7 @@ module.exports = {
         `Uptime: ${uptimeStr}`,
         `Ping: ${ping} ms`,
         `CPU Load: ${cpuUsage}`,
-        `Owner: 𝐓𝐀𝐇𝐀 𝐊𝐇𝐀𝐍`
+        `Owner: Taha khan`
       ];
       ctx.fillStyle = "#F0F0F0";
       ctx.font = "bold 40px Sans";
